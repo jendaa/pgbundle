@@ -7,7 +7,7 @@ module PgBundle
   # on a typical environment ssh access is needed if the database host differs from
   # the Pgfile host
   class Database
-    attr_accessor :name, :user, :host, :system_user, :use_sudo, :port, :force_ssh
+    attr_accessor :name, :user, :host, :system_user, :use_sudo, :port, :force_ssh, :ssh_port
     def initialize(name, opts = {})
       @name        = name
       @user        = opts[:user]        || 'postgres'
@@ -16,6 +16,7 @@ module PgBundle
       @system_user = opts[:system_user] || 'postgres'
       @port        = opts[:port]        || 5432
       @force_ssh   = opts[:force_ssh]   || false
+      @ssh_port    = opts[:ssh_port]    || 22
       @slave       = opts[:slave]       || false
     end
 
@@ -128,7 +129,7 @@ module PgBundle
     end
 
     def remote(cmd)
-      Net::SSH.start(host, system_user) do |ssh|
+      Net::SSH.start(host, system_user, :port=>ssh_port) do |ssh|
         ssh.exec cmd
       end
     end

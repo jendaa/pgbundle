@@ -37,6 +37,7 @@ use_sudo      | false       | if true use `sudo` to run `make install` if needed
 system_user   | 'postgres'  | the (os) system user that is allowed to install an extension (through make)
 port          | 5432        | the database port
 force_ssh     | false       | run commands via ssh even if host is `localhost`
+ssh_port      | 22          | use this port with the ssh command
 slave         | false       | defines if the database runs as a read-only slave thus skips any `CREATE` command
 
 **pgx**
